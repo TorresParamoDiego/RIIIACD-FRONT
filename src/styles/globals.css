@@ -1,0 +1,162 @@
+@import 'tailwindcss';
+
+/*
+ * Tokens de identidad visual de RIIIACD.
+ * La paleta institucional proviene del brief del proyecto; los tonos auxiliares
+ * (texto secundario, bordes) se derivan de ella para mantener contraste AA.
+ */
+@theme {
+  --font-sans: 'Archivo', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Paleta institucional */
+  --color-navy-950: #071b35; /* Azul marino */
+  --color-navy-900: #0c2a4d;
+  --color-navy-800: #123c68; /* Azul institucional */
+  --color-navy-700: #1a4d82;
+  --color-electric-700: #1d4ed8;
+  --color-electric-600: #2563eb; /* Azul eléctrico */
+  --color-electric-100: #dbe7fd;
+  --color-electric-50: #eef3fe;
+  --color-signal: #22d3ee; /* Cian */
+  --color-mist: #f3f6fa; /* Gris claro */
+
+  /* Derivados funcionales */
+  --color-ink: #071b35;
+  --color-ink-muted: #44546b;
+  --color-ink-subtle: #64748b;
+  --color-rule: #dce3ec;
+  --color-rule-strong: #c4cfdc;
+  --color-danger: #b42318;
+  --color-danger-50: #fef3f2;
+  --color-success: #067647;
+  --color-success-50: #ecfdf3;
+
+  --radius-control: 0.5rem;
+  --radius-card: 0.875rem;
+  --radius-panel: 1.5rem;
+
+  --shadow-card: 0 1px 2px rgb(7 27 53 / 0.04), 0 8px 24px -12px rgb(7 27 53 / 0.12);
+  --shadow-raised: 0 2px 4px rgb(7 27 53 / 0.05), 0 24px 48px -24px rgb(7 27 53 / 0.28);
+}
+
+/* Archivo es una familia variable con eje de anchura: los titulares usan su
+   versión expandida y el texto corrido su anchura normal. */
+@utility font-display {
+  font-stretch: 112%;
+  letter-spacing: -0.018em;
+}
+
+@utility font-condensed {
+  font-stretch: 88%;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+    font-feature-settings: 'tnum' 0;
+  }
+
+  ::selection {
+    background: var(--color-electric-100);
+    color: var(--color-navy-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-electric-600);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .on-dark :focus-visible {
+    outline-color: var(--color-signal);
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .prose-institutional {
+    @apply max-w-[68ch] text-[1.0625rem] leading-[1.7] text-ink-muted;
+  }
+
+  .prose-institutional p + p {
+    @apply mt-4;
+  }
+
+  .field-control {
+    @apply block w-full rounded-control border border-rule-strong bg-white px-3.5 py-2.5 text-[0.9375rem] text-ink placeholder:text-ink-subtle transition-colors;
+    @apply hover:border-navy-700/50 focus:border-electric-600 focus:ring-4 focus:ring-electric-600/15 focus:outline-none;
+  }
+
+  .field-control[aria-invalid='true'] {
+    @apply border-danger focus:border-danger focus:ring-danger/15;
+  }
+}
+
+/* ---------- Grafo de red del hero: única secuencia de animación al cargar ---------- */
+.graph-edge {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: graph-draw 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.graph-node {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: graph-node-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.graph-label {
+  opacity: 0;
+  animation: graph-fade 0.8s ease-out forwards;
+}
+
+@keyframes graph-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes graph-node-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes graph-fade {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .graph-edge,
+  .graph-node,
+  .graph-label {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
