@@ -54,9 +54,7 @@ export function validateStatistics(stats: NetworkStatistics = networkStatistics)
   const issues: string[] = [];
   const sumaTipos = Object.values(stats.institucionesPorTipo).reduce((acc, n) => acc + n, 0);
   if (sumaTipos !== stats.instituciones) {
-    issues.push(
-      `La suma por tipo (${sumaTipos}) no coincide con el total de instituciones (${stats.instituciones}).`,
-    );
+    issues.push(`La suma por tipo (${sumaTipos}) no coincide con el total de instituciones (${stats.instituciones}).`);
   }
   return issues;
 }

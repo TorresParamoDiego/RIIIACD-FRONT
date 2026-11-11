@@ -46,15 +46,18 @@ export function Leadership({
         <div className="mt-12 grid gap-6 lg:grid-cols-12">
           <Reveal className="lg:col-span-5">
             <article className="flex h-full flex-col rounded-panel border border-rule bg-white p-7 shadow-card sm:p-9">
-              <Monogram nombres={leader.nombres} apellidos={leader.apellidos} size="xl" color="#123C68" />
-              <p className="mt-7 text-[0.9375rem] font-semibold text-electric-700">{leader.rol}</p>
-              <h3 className="mt-1.5 font-display text-[1.625rem] leading-tight font-semibold text-navy-950 text-balance">
+              <Monogram nombres={leader.nombres} apellidos={leader.apellidos} size="xl" color="#1B396A" />
+              <p className="mt-7 text-[0.9375rem] font-semibold text-brand-green">{leader.rol}</p>
+              <h3 className="mt-1.5 font-display text-[1.625rem] leading-tight font-semibold text-ink text-balance">
                 {formatMemberName(leader)}
               </h3>
               {leaderLine ? (
                 <p className="mt-3 text-ink-muted">
                   Responsable de la{' '}
-                  <Link to={researchLinePath(leaderLine.slug)} className="font-medium text-navy-950 underline decoration-rule-strong underline-offset-4 hover:decoration-electric-600">
+                  <Link
+                    to={researchLinePath(leaderLine.slug)}
+                    className="font-medium text-ink underline decoration-rule-strong underline-offset-4 hover:decoration-brand-green"
+                  >
                     línea {leaderLine.numero}: {leaderLine.nombre}
                   </Link>
                 </p>
@@ -82,7 +85,7 @@ export function Leadership({
 
           <Reveal className="lg:col-span-7" delay={0.08}>
             <div className="h-full rounded-panel border border-rule bg-mist/60 p-7 sm:p-9">
-              <h3 className="text-[1.0625rem] font-semibold text-navy-950">Responsables de línea</h3>
+              <h3 className="text-[1.0625rem] font-semibold text-ink">Responsables de línea</h3>
               <ol className="mt-5 divide-y divide-rule">
                 {researchLines.map((line) => {
                   const responsable = getDocumentedMemberById(line.responsableId);
@@ -97,12 +100,10 @@ export function Leadership({
                         {line.numero}
                       </span>
                       <div>
-                        <p className="font-semibold text-navy-950">
-                          {responsable ? formatMemberName(responsable) : 'Por confirmar'}
-                        </p>
+                        <p className="font-semibold text-ink">{responsable ? formatMemberName(responsable) : 'Por confirmar'}</p>
                         <Link
                           to={researchLinePath(line.slug)}
-                          className="mt-0.5 inline-block rounded text-[0.9375rem] leading-snug text-ink-muted hover:text-electric-700"
+                          className="mt-0.5 inline-block rounded text-[0.9375rem] leading-snug text-ink-muted hover:text-brand-green-hover"
                         >
                           <span className="sr-only">Línea {line.numero}: </span>
                           {line.nombre}

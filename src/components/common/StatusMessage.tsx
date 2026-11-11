@@ -24,12 +24,12 @@ function StatusMessage({ icon: Icon, title, description, action, tone = 'neutral
       <span
         className={cn(
           'grid size-12 place-items-center rounded-full',
-          tone === 'danger' ? 'bg-white text-danger' : 'bg-white text-navy-800',
+          tone === 'danger' ? 'bg-white text-danger' : 'bg-white text-brand-blue',
         )}
       >
         <Icon className="size-6" aria-hidden="true" />
       </span>
-      <h3 className="mt-4 text-lg font-semibold text-navy-950">{title}</h3>
+      <h3 className="mt-4 text-lg font-semibold text-ink">{title}</h3>
       {description ? <div className="mt-2 max-w-md text-ink-muted">{description}</div> : null}
       {action ? <div className="mt-6">{action}</div> : null}
     </div>

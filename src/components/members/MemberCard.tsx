@@ -19,12 +19,12 @@ export function MemberCard({ member, institutionName, line, onOpen }: MemberCard
   return (
     <article
       aria-labelledby={headingId}
-      className="group relative flex h-full flex-col rounded-card border border-rule bg-white p-5 transition-[border-color,box-shadow] duration-200 hover:border-rule-strong hover:shadow-card focus-within:border-electric-600 focus-within:ring-4 focus-within:ring-electric-600/15"
+      className="group relative flex h-full flex-col rounded-card border border-rule bg-white p-5 transition-[border-color,box-shadow] duration-200 hover:border-rule-strong hover:shadow-card focus-within:border-brand-green focus-within:ring-4 focus-within:ring-brand-green/15"
     >
       <div className="flex items-start gap-4">
         <Monogram nombres={member.nombres} apellidos={member.apellidos} color={color} fotoUrl={member.fotoUrl} />
         <div className="min-w-0 flex-1">
-          <h3 id={headingId} className="leading-snug font-semibold text-navy-950">
+          <h3 id={headingId} className="leading-snug font-semibold text-ink">
             <button
               type="button"
               onClick={() => onOpen(member.id)}
@@ -34,7 +34,7 @@ export function MemberCard({ member, institutionName, line, onOpen }: MemberCard
               {formatMemberName(member)}
             </button>
           </h3>
-          <p className="mt-1 text-sm font-medium text-electric-700">{member.rol}</p>
+          <p className="mt-1 text-sm font-medium text-brand-green">{member.rol}</p>
         </div>
         {member.esDemostrativo ? (
           <span className="shrink-0 rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-800 ring-1 ring-amber-200">

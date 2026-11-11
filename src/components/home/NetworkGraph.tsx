@@ -39,8 +39,8 @@ export function NetworkGraph({ nodeCount, className }: NetworkGraphProps) {
     >
       <defs>
         <radialGradient id="graph-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#22D3EE" stopOpacity="0.16" />
-          <stop offset="100%" stopColor="#22D3EE" stopOpacity="0" />
+          <stop offset="0%" stopColor="#A7F3D0" stopOpacity="0.12" />
+          <stop offset="100%" stopColor="#A7F3D0" stopOpacity="0" />
         </radialGradient>
       </defs>
 
@@ -60,8 +60,8 @@ export function NetworkGraph({ nodeCount, className }: NetworkGraphProps) {
               y1={edge.y1}
               x2={edge.x2}
               y2={edge.y2}
-              stroke="#22D3EE"
-              strokeOpacity={0.42}
+              stroke="#A7F3D0"
+              strokeOpacity={0.45}
               strokeWidth={1.2}
             />
           ))}
@@ -135,7 +135,7 @@ export function NetworkGraph({ nodeCount, className }: NetworkGraphProps) {
                 cy={hub.y}
                 r={hub.r}
                 fill={colorFor(hub.cluster)}
-                stroke="#071B35"
+                stroke="#1B396A"
                 strokeWidth={2}
               />
               <text
@@ -149,7 +149,7 @@ export function NetworkGraph({ nodeCount, className }: NetworkGraphProps) {
                 fillOpacity={0.72}
                 fontSize={15}
                 fontWeight={600}
-                fontFamily="Archivo, ui-sans-serif, system-ui, sans-serif"
+                fontFamily="'Archivo Variable', Archivo, ui-sans-serif, system-ui, sans-serif"
               >
                 Línea {line.numero}
               </text>

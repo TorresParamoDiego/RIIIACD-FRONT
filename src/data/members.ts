@@ -83,15 +83,7 @@ const documentedMembers: PublicMember[] = [
 /*  Se ocultan con VITE_SHOW_DEMO_DATA=false.                                  */
 /* -------------------------------------------------------------------------- */
 
-const DEMO_INSTITUTION_IDS = [
-  'demo-it-a',
-  'demo-it-b',
-  'demo-it-c',
-  'demo-it-d',
-  'demo-ci-a',
-  'demo-un-a',
-  'demo-un-b',
-] as const;
+const DEMO_INSTITUTION_IDS = ['demo-it-a', 'demo-it-b', 'demo-it-c', 'demo-it-d', 'demo-ci-a', 'demo-un-a', 'demo-un-b'] as const;
 
 const DEMO_LINE_IDS: ResearchLineId[] = ['linea-1', 'linea-2', 'linea-3', 'linea-4', 'linea-5'];
 
@@ -119,9 +111,7 @@ function buildDemoMember(index: number): PublicMember {
 
 const demoMembers: PublicMember[] = Array.from({ length: DEMO_COUNT }, (_, i) => buildDemoMember(i));
 
-export const publicMembers: PublicMember[] = dataSourceConfig.showDemoData
-  ? [...documentedMembers, ...demoMembers]
-  : documentedMembers;
+export const publicMembers: PublicMember[] = dataSourceConfig.showDemoData ? [...documentedMembers, ...demoMembers] : documentedMembers;
 
 /** Acceso sincrónico para datos fijos (p. ej. responsables de línea en la portada). */
 export function getDocumentedMemberById(id: string): PublicMember | undefined {

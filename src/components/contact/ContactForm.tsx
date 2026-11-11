@@ -1,8 +1,9 @@
-import { useId, useState, type FormEvent, type ReactNode } from 'react';
+import { useId, useState, type FormEvent } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CircleAlert, CircleCheck, LoaderCircle, Mail, Send } from 'lucide-react';
 import { Button, ButtonAnchor } from '@/components/common/Button';
 import { siteConfig } from '@/config/site';
+import { FormField as Field } from '@/components/common/FormField';
 import { cn } from '@/utils/cn';
 
 interface ContactValues {
@@ -52,8 +53,7 @@ export function ContactForm() {
 
   const errors = validateContact(values);
   const errorCount = Object.keys(errors).length;
-  const showError = (field: ContactField): string | undefined =>
-    touched[field] || submitAttempted ? errors[field] : undefined;
+  const showError = (field: ContactField): string | undefined => (touched[field] || submitAttempted ? errors[field] : undefined);
 
   const update = (field: ContactField, value: string): void => setValues((prev) => ({ ...prev, [field]: value }));
   const touch = (field: ContactField): void => setTouched((prev) => ({ ...prev, [field]: true }));
@@ -106,11 +106,11 @@ export function ContactForm() {
             <span className="grid size-12 place-items-center rounded-full bg-success-50 text-success">
               <CircleCheck className="size-6" aria-hidden="true" />
             </span>
-            <h2 className="mt-5 font-display text-[1.5rem] leading-tight font-semibold text-navy-950">Tu mensaje está listo</h2>
+            <h2 className="mt-5 font-display text-[1.5rem] leading-tight font-semibold text-ink">Tu mensaje está listo</h2>
             <p className="mt-3 leading-relaxed text-ink-muted">
-              Este portal todavía no envía mensajes desde el sitio, así que <strong className="font-semibold text-navy-950">aún no se ha enviado</strong>.
-              Ábrelo en tu aplicación de correo para enviarlo a {siteConfig.correoContacto}; el asunto y el texto ya están
-              escritos.
+              Este portal todavía no envía mensajes desde el sitio, así que{' '}
+              <strong className="font-semibold text-ink">aún no se ha enviado</strong>. Ábrelo en tu aplicación de correo para enviarlo a{' '}
+              {siteConfig.correoContacto}; el asunto y el texto ya están escritos.
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <ButtonAnchor
@@ -137,13 +137,16 @@ export function ContactForm() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <h2 id={`${formId}-title`} className="font-display text-[1.5rem] leading-tight font-semibold text-navy-950">
+            <h2 id={`${formId}-title`} className="font-display text-[1.5rem] leading-tight font-semibold text-ink">
               Escríbenos
             </h2>
             <p className="mt-2 text-[0.9375rem] text-ink-muted">Todos los campos son obligatorios.</p>
 
             {submitAttempted && errorCount > 0 ? (
-              <div role="alert" className="mt-6 flex gap-2.5 rounded-control border border-danger/25 bg-danger-50 px-4 py-3 text-[0.9375rem] text-danger">
+              <div
+                role="alert"
+                className="mt-6 flex gap-2.5 rounded-control border border-danger/25 bg-danger-50 px-4 py-3 text-[0.9375rem] text-danger"
+              >
                 <CircleAlert className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
                 {errorCount === 1 ? 'Revisa el campo marcado.' : `Revisa los ${errorCount} campos marcados.`}
               </div>
@@ -183,7 +186,12 @@ export function ContactForm() {
                   </span>
                 }
               >
-                <textarea rows={6} {...fieldProps('mensaje')} className="field-control resize-y" onChange={(e) => update('mensaje', e.target.value)} />
+                <textarea
+                  rows={6}
+                  {...fieldProps('mensaje')}
+                  className="field-control resize-y"
+                  onChange={(e) => update('mensaje', e.target.value)}
+                />
               </Field>
             </div>
 
@@ -210,36 +218,6 @@ export function ContactForm() {
           </motion.form>
         )}
       </AnimatePresence>
-    </div>
-  );
-}
-
-interface FieldProps {
-  label: string;
-  htmlFor: string;
-  error?: string;
-  errorId: string;
-  hint?: ReactNode;
-  className?: string;
-  children: ReactNode;
-}
-
-function Field({ label, htmlFor, error, errorId, hint, className, children }: FieldProps) {
-  return (
-    <div className={cn('flex flex-col gap-1.5', className)}>
-      <div className="flex items-baseline justify-between gap-3">
-        <label htmlFor={htmlFor} className="text-sm font-medium text-navy-950">
-          {label}
-        </label>
-        {hint ? <span className="text-xs text-ink-subtle">{hint}</span> : null}
-      </div>
-      {children}
-      {error ? (
-        <p id={errorId} className="flex items-start gap-1.5 text-sm text-danger">
-          <CircleAlert className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
-          {error}
-        </p>
-      ) : null}
     </div>
   );
 }

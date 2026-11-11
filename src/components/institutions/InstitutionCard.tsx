@@ -26,7 +26,7 @@ export function InstitutionCard({ institution }: InstitutionCardProps) {
             loading="lazy"
           />
         ) : (
-          <span className="font-display text-[1.75rem] font-semibold tracking-tight text-navy-800/80" aria-hidden="true">
+          <span className="font-display text-[1.75rem] font-semibold tracking-tight text-brand-blue/80" aria-hidden="true">
             {institution.siglas ?? institution.nombre.slice(0, 3)}
           </span>
         )}
@@ -42,14 +42,14 @@ export function InstitutionCard({ institution }: InstitutionCardProps) {
           <span className="size-2 rounded-sm" style={{ backgroundColor: color }} aria-hidden="true" />
           {typeInfo.etiqueta}
         </p>
-        <h3 className="mt-2 leading-snug font-semibold text-navy-950 text-balance">{institution.nombre}</h3>
+        <h3 className="mt-2 leading-snug font-semibold text-ink text-balance">{institution.nombre}</h3>
 
         <div className="mt-auto flex items-center justify-between gap-3 pt-5 text-[0.9375rem]">
           <span className="text-ink-muted">{plural(institution.integrantes, 'integrante', 'integrantes')}</span>
           {institution.integrantes > 0 ? (
             <Link
               to={`${ROUTES.integrantes}?institucion=${institution.id}`}
-              className="inline-flex items-center gap-1 rounded font-semibold text-electric-700 hover:text-navy-950"
+              className="inline-flex items-center gap-1 rounded font-semibold text-brand-green hover:text-ink"
             >
               Ver
               <span className="sr-only"> integrantes de {institution.nombre}</span>

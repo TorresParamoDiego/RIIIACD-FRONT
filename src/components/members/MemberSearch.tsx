@@ -12,21 +12,25 @@ export function MemberSearch({ value, onChange, debounceMs = 200 }: MemberSearch
   const id = useId();
   const [draft, setDraft] = useState(value);
 
-  // Sincroniza con cambios externos (p. ej. "Quitar filtros" o navegación).
-  useEffect(() => {
+  // Sincroniza con cambios externos (p. ej. "Quitar filtros" o navegación),
+  // ajustando el estado durante el render en lugar de en un efecto.
+  const [lastValue, setLastValue] = useState(value);
+  if (value !== lastValue) {
+    setLastValue(value);
     setDraft(value);
-  }, [value]);
+  }
 
   useEffect(() => {
     if (draft === value) return;
     const timer = window.setTimeout(() => onChange(draft), debounceMs);
     return () => window.clearTimeout(timer);
     // `value` se omite a propósito: solo el texto escrito debe disparar la búsqueda.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [draft, debounceMs, onChange]);
 
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-sm font-medium text-navy-950">
+      <label htmlFor={id} className="text-sm font-medium text-ink">
         Buscar por nombre o apellidos
       </label>
       <div className="relative">
@@ -51,7 +55,7 @@ export function MemberSearch({ value, onChange, debounceMs = 200 }: MemberSearch
               setDraft('');
               onChange('');
             }}
-            className="absolute top-1/2 right-2 grid size-8 -translate-y-1/2 place-items-center rounded-md text-ink-subtle hover:bg-mist hover:text-navy-950"
+            className="absolute top-1/2 right-2 grid size-8 -translate-y-1/2 place-items-center rounded-md text-ink-subtle hover:bg-mist hover:text-ink"
             aria-label="Borrar búsqueda"
           >
             <X className="size-4" aria-hidden="true" />

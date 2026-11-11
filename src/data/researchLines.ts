@@ -63,17 +63,14 @@ export const researchLines: ResearchLine[] = [
     slug: 'ia-salud-educacion-agricultura',
     nombre: 'Inteligencia artificial y ciencia de datos en salud, educación y agricultura',
     nombreCorto: 'IA en salud, educación y agricultura',
-    descripcion:
-      'Aplica la inteligencia artificial y la ciencia de datos en tres sectores prioritarios: salud, educación y agricultura.',
+    descripcion: 'Aplica la inteligencia artificial y la ciencia de datos en tres sectores prioritarios: salud, educación y agricultura.',
     ejes: ['Salud', 'Educación', 'Agricultura'],
     responsableId: 'm-maria-hernandez-perez',
     palabrasClave: ['salud', 'educacion', 'agricultura', 'agricola', 'medic'],
   },
 ];
 
-const researchLineById = new Map<ResearchLineId, ResearchLine>(
-  researchLines.map((line) => [line.id, line]),
-);
+const researchLineById = new Map<ResearchLineId, ResearchLine>(researchLines.map((line) => [line.id, line]));
 
 export function getResearchLineById(id: ResearchLineId | null | undefined): ResearchLine | undefined {
   return id ? researchLineById.get(id) : undefined;

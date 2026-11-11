@@ -6,24 +6,23 @@
  * (texto secundario, bordes) se derivan de ella para mantener contraste AA.
  */
 @theme {
-  --font-sans: 'Archivo', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Archivo Variable', 'Archivo', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  /* Paleta institucional */
-  --color-navy-950: #071b35; /* Azul marino */
-  --color-navy-900: #0c2a4d;
-  --color-navy-800: #123c68; /* Azul institucional */
-  --color-navy-700: #1a4d82;
-  --color-electric-700: #1d4ed8;
-  --color-electric-600: #2563eb; /* Azul eléctrico */
-  --color-electric-100: #dbe7fd;
-  --color-electric-50: #eef3fe;
-  --color-signal: #22d3ee; /* Cian */
+  /* Identidad visual (brief fase 2, sección 1.1). Pantone 294 C es solo una
+     referencia provisional pendiente de validar y no se usa en la interfaz. */
+  --color-brand-blue: #1b396a; /* Azul secundario: hero, pie y bandas oscuras. Blanco encima: 11.41:1 */
+  --color-brand-blue-deep: #15325a; /* Hover sobre fondos azules. Blanco encima: 12.84:1 */
+  --color-brand-green: #117533; /* Verde de acento: botones primarios, enlaces. 5.81:1 con blanco */
+  --color-brand-green-hover: #0e6b2c; /* Hover del verde. 6.65:1 con blanco */
+  --color-brand-green-100: #d1eada; /* Selección de texto */
+  --color-brand-green-50: #e8f4ec; /* Tintes. Verde encima: 5.14:1; ink encima: 15.27:1 */
+  --color-brand-accent: #a7f3d0; /* Acento sobre azul (el verde no alcanza contraste ahí). 8.90:1 */
   --color-mist: #f3f6fa; /* Gris claro */
 
-  /* Derivados funcionales */
+  /* Neutros */
   --color-ink: #071b35;
   --color-ink-muted: #44546b;
-  --color-ink-subtle: #64748b;
+  --color-ink-subtle: #5b6b82; /* Antes #64748B: no llegaba a 4.5:1 sobre mist (4.39). Ahora 5.43 en blanco, 5.01 en mist */
   --color-rule: #dce3ec;
   --color-rule-strong: #c4cfdc;
   --color-danger: #b42318;
@@ -63,18 +62,18 @@
   }
 
   ::selection {
-    background: var(--color-electric-100);
-    color: var(--color-navy-950);
+    background: var(--color-brand-green-100);
+    color: var(--color-ink);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-electric-600);
+    outline: 2px solid var(--color-brand-green);
     outline-offset: 3px;
     border-radius: 4px;
   }
 
   .on-dark :focus-visible {
-    outline-color: var(--color-signal);
+    outline-color: var(--color-brand-accent);
   }
 
   [hidden] {
@@ -97,7 +96,7 @@
 
   .field-control {
     @apply block w-full rounded-control border border-rule-strong bg-white px-3.5 py-2.5 text-[0.9375rem] text-ink placeholder:text-ink-subtle transition-colors;
-    @apply hover:border-navy-700/50 focus:border-electric-600 focus:ring-4 focus:ring-electric-600/15 focus:outline-none;
+    @apply hover:border-brand-blue/50 focus:border-brand-green focus:ring-4 focus:ring-brand-green/15 focus:outline-none;
   }
 
   .field-control[aria-invalid='true'] {

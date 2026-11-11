@@ -9,7 +9,7 @@ export function Footer() {
   const { institucionMatriz } = siteConfig;
 
   return (
-    <footer className="on-dark bg-navy-950 text-white">
+    <footer className="on-dark bg-brand-blue text-white">
       <div className="container-page grid gap-12 py-16 md:grid-cols-12">
         <div className="md:col-span-5">
           <div className="flex items-center gap-3">
@@ -22,7 +22,7 @@ export function Footer() {
           </p>
           <a
             href={`mailto:${siteConfig.correoContacto}`}
-            className="mt-6 inline-flex items-center gap-2 rounded-md text-[0.9375rem] text-signal hover:text-white"
+            className="mt-6 inline-flex items-center gap-2 rounded-md text-[0.9375rem] text-brand-accent hover:text-white"
           >
             <Mail className="size-4" aria-hidden="true" />
             {siteConfig.correoContacto}
@@ -30,7 +30,7 @@ export function Footer() {
         </div>
 
         <nav aria-label="Navegación secundaria" className="md:col-span-3">
-          <h2 className="text-sm font-semibold text-white/50">Sitio</h2>
+          <h2 className="text-sm font-semibold text-white/70">Sitio</h2>
           <ul className="mt-4 space-y-2.5">
             {mainNavigation.map((item) => (
               <li key={item.to}>
@@ -43,14 +43,11 @@ export function Footer() {
         </nav>
 
         <nav aria-label="Líneas de investigación" className="md:col-span-4">
-          <h2 className="text-sm font-semibold text-white/50">Líneas de investigación</h2>
+          <h2 className="text-sm font-semibold text-white/70">Líneas de investigación</h2>
           <ul className="mt-4 space-y-2.5">
             {researchLines.map((line) => (
               <li key={line.id}>
-                <Link
-                  to={researchLinePath(line.slug)}
-                  className="rounded text-[0.9375rem] text-white/80 hover:text-white"
-                >
+                <Link to={researchLinePath(line.slug)} className="rounded text-[0.9375rem] text-white/80 hover:text-white">
                   {line.nombreCorto}
                 </Link>
               </li>
@@ -60,7 +57,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="container-page flex flex-col gap-3 py-6 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
+        <div className="container-page flex flex-col gap-3 py-6 text-sm text-white/70 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {siteConfig.siglas}. Todos los derechos reservados.
           </p>

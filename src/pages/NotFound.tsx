@@ -20,7 +20,7 @@ export default function NotFound() {
         </ButtonLink>
       </PageHeader>
       <section className="container-page py-14" aria-labelledby="secciones-titulo">
-        <h2 id="secciones-titulo" className="text-[1.0625rem] font-semibold text-navy-950">
+        <h2 id="secciones-titulo" className="text-[1.0625rem] font-semibold text-ink">
           Secciones del sitio
         </h2>
         <ul className="mt-4 flex flex-wrap gap-2">
@@ -28,7 +28,7 @@ export default function NotFound() {
             <li key={item.to}>
               <Link
                 to={item.to}
-                className="inline-flex h-10 items-center rounded-full border border-rule-strong px-4 text-[0.9375rem] font-medium text-navy-950 hover:border-navy-800 hover:bg-mist"
+                className="inline-flex h-10 items-center rounded-full border border-rule-strong px-4 text-[0.9375rem] font-medium text-ink hover:border-brand-blue hover:bg-mist"
               >
                 {item.label}
               </Link>

@@ -20,10 +20,13 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Cierra el menú móvil al navegar.
-  useEffect(() => {
+  // Cierra el menú móvil al navegar (ajuste de estado durante el render,
+  // patrón recomendado por React en lugar de un efecto).
+  const [lastPathname, setLastPathname] = useState(pathname);
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
     setOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     if (!open) return;
@@ -34,7 +37,7 @@ export function Navbar() {
     return () => window.removeEventListener('keydown', onKey);
   }, [open]);
 
-  // Todas las páginas abren con una banda azul marino: la barra es
+  // Todas las páginas abren con una banda azul de marca: la barra es
   // transparente sobre ella y se vuelve sólida al desplazarse.
   const solid = scrolled || open;
 
@@ -64,13 +67,13 @@ export function Navbar() {
                       'relative rounded-md px-3 py-2 text-[0.9375rem] font-medium transition-colors',
                       solid
                         ? isActive
-                          ? 'text-navy-950'
-                          : 'text-ink-muted hover:text-navy-950'
+                          ? 'text-ink'
+                          : 'text-ink-muted hover:text-ink'
                         : isActive
                           ? 'text-white'
                           : 'text-white/70 hover:text-white',
-                      isActive &&
-                        'after:absolute after:inset-x-3 after:-bottom-[1.2rem] after:h-0.5 after:rounded-full after:bg-signal',
+                      isActive && 'after:absolute after:inset-x-3 after:-bottom-[1.2rem] after:h-0.5 after:rounded-full',
+                      isActive && (solid ? 'after:bg-brand-green' : 'after:bg-brand-accent'),
                     )
                   }
                 >
@@ -85,7 +88,7 @@ export function Navbar() {
           type="button"
           className={cn(
             'grid size-11 place-items-center rounded-control lg:hidden',
-            solid ? 'text-navy-950 hover:bg-mist' : 'text-white hover:bg-white/10',
+            solid ? 'text-ink hover:bg-mist' : 'text-white hover:bg-white/10',
           )}
           aria-expanded={open}
           aria-controls="menu-movil"
@@ -116,14 +119,14 @@ export function Navbar() {
                     className={({ isActive }) =>
                       cn(
                         'flex items-center justify-between rounded-control px-3 py-3.5 text-[1.0625rem] font-medium',
-                        isActive ? 'bg-electric-50 text-navy-950' : 'text-ink-muted hover:bg-mist hover:text-navy-950',
+                        isActive ? 'bg-brand-green-50 text-ink' : 'text-ink-muted hover:bg-mist hover:text-ink',
                       )
                     }
                   >
                     {({ isActive }) => (
                       <>
                         {item.label}
-                        {isActive ? <span className="size-1.5 rounded-full bg-electric-600" aria-hidden="true" /> : null}
+                        {isActive ? <span className="size-1.5 rounded-full bg-brand-green" aria-hidden="true" /> : null}
                       </>
                     )}
                   </NavLink>
@@ -133,7 +136,7 @@ export function Navbar() {
             <div className="container-page border-t border-rule py-4">
               <a
                 href={`mailto:${siteConfig.correoContacto}`}
-                className="flex items-center gap-2 rounded-md px-3 py-2 text-[0.9375rem] text-ink-muted hover:text-navy-950"
+                className="flex items-center gap-2 rounded-md px-3 py-2 text-[0.9375rem] text-ink-muted hover:text-ink"
               >
                 <Mail className="size-4" aria-hidden="true" />
                 {siteConfig.correoContacto}

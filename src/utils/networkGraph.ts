@@ -55,16 +55,9 @@ function createRandom(seed: number): () => number {
   };
 }
 
-const distance = (a: { x: number; y: number }, b: { x: number; y: number }): number =>
-  Math.hypot(a.x - b.x, a.y - b.y);
+const distance = (a: { x: number; y: number }, b: { x: number; y: number }): number => Math.hypot(a.x - b.x, a.y - b.y);
 
-export function buildNetworkGraph({
-  nodeCount,
-  clusterCount,
-  width = 560,
-  height = 520,
-  seed = 2024,
-}: GraphOptions): NetworkGraph {
+export function buildNetworkGraph({ nodeCount, clusterCount, width = 560, height = 520, seed = 2024 }: GraphOptions): NetworkGraph {
   const random = createRandom(seed);
   const cx = width / 2;
   const cy = height / 2;

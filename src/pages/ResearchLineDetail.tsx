@@ -23,10 +23,7 @@ export default function ResearchLineDetail() {
   useDocumentTitle(line ? `Línea ${line.numero}` : 'Línea no encontrada');
   const { status, members, error, retry, getById } = useMembers();
 
-  const lineMembers = useMemo(
-    () => (line ? members.filter((m) => m.lineaInvestigacionId === line.id) : []),
-    [members, line],
-  );
+  const lineMembers = useMemo(() => (line ? members.filter((m) => m.lineaInvestigacionId === line.id) : []), [members, line]);
 
   if (!line) return <NotFound />;
 
@@ -59,12 +56,12 @@ export default function ResearchLineDetail() {
       <div className="container-page grid gap-12 py-14 sm:py-20 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-7">
           <section aria-labelledby="descripcion-titulo">
-            <h2 id="descripcion-titulo" className="font-display text-[1.5rem] font-semibold text-navy-950">
+            <h2 id="descripcion-titulo" className="font-display text-[1.5rem] font-semibold text-ink">
               Descripción
             </h2>
             <p className="prose-institutional mt-4">{line.descripcion}</p>
 
-            <h3 className="mt-10 text-[1.0625rem] font-semibold text-navy-950">Ejes temáticos</h3>
+            <h3 className="mt-10 text-[1.0625rem] font-semibold text-ink">Ejes temáticos</h3>
             <ul className="mt-4 flex flex-wrap gap-2">
               {line.ejes.map((eje) => (
                 <li
@@ -79,7 +76,7 @@ export default function ResearchLineDetail() {
           </section>
 
           <section aria-labelledby="productos-titulo" className="mt-14">
-            <h2 id="productos-titulo" className="font-display text-[1.5rem] font-semibold text-navy-950">
+            <h2 id="productos-titulo" className="font-display text-[1.5rem] font-semibold text-ink">
               Proyectos y productos
             </h2>
             <PendingContent className="mt-4" title="Información por publicar">
@@ -97,7 +94,7 @@ export default function ResearchLineDetail() {
               <div className="mt-4 flex items-center gap-4">
                 <Monogram nombres={responsable.nombres} apellidos={responsable.apellidos} color={theme.color} size="lg" />
                 <div>
-                  <p className="text-[1.125rem] leading-snug font-semibold text-navy-950">{formatMemberName(responsable)}</p>
+                  <p className="text-[1.125rem] leading-snug font-semibold text-ink">{formatMemberName(responsable)}</p>
                   <p className="mt-1 text-[0.9375rem] text-ink-muted">
                     {getInstitutionById(responsable.institucionId)?.nombre ?? UNCONFIRMED_INSTITUTION_LABEL}
                   </p>
@@ -118,9 +115,7 @@ export default function ResearchLineDetail() {
             {status === 'error' ? <ErrorState className="mt-4 py-8" error={error} onRetry={retry} /> : null}
             {status === 'success' ? (
               <>
-                <p className="mt-2 font-display text-[2.25rem] font-semibold text-navy-950 tabular-nums">
-                  {lineMembers.length}
-                </p>
+                <p className="mt-2 font-display text-[2.25rem] font-semibold text-ink tabular-nums">{lineMembers.length}</p>
                 <p className="text-[0.9375rem] text-ink-muted">
                   {plural(lineMembers.length, 'persona registrada', 'personas registradas')} en esta línea
                   {lineMembers.some((m) => m.esDemostrativo) ? ', incluidos registros demostrativos' : ''}.
@@ -143,14 +138,11 @@ export default function ResearchLineDetail() {
       <nav aria-label="Otras líneas de investigación" className="border-t border-rule">
         <div className="container-page grid gap-4 py-8 sm:grid-cols-2">
           {previous ? (
-            <Link
-              to={researchLinePath(previous.slug)}
-              className="group flex items-center gap-3 rounded-card p-3 hover:bg-mist"
-            >
-              <ArrowLeft className="size-5 shrink-0 text-ink-subtle group-hover:text-electric-600" aria-hidden="true" />
+            <Link to={researchLinePath(previous.slug)} className="group flex items-center gap-3 rounded-card p-3 hover:bg-mist">
+              <ArrowLeft className="size-5 shrink-0 text-ink-subtle group-hover:text-brand-green" aria-hidden="true" />
               <span>
                 <span className="block text-sm text-ink-subtle">Línea anterior</span>
-                <span className="font-semibold text-navy-950">{previous.nombreCorto}</span>
+                <span className="font-semibold text-ink">{previous.nombreCorto}</span>
               </span>
             </Link>
           ) : (
@@ -163,9 +155,9 @@ export default function ResearchLineDetail() {
             >
               <span>
                 <span className="block text-sm text-ink-subtle">Línea siguiente</span>
-                <span className="font-semibold text-navy-950">{next.nombreCorto}</span>
+                <span className="font-semibold text-ink">{next.nombreCorto}</span>
               </span>
-              <ArrowRight className="size-5 shrink-0 text-ink-subtle group-hover:text-electric-600" aria-hidden="true" />
+              <ArrowRight className="size-5 shrink-0 text-ink-subtle group-hover:text-brand-green" aria-hidden="true" />
             </Link>
           ) : null}
         </div>

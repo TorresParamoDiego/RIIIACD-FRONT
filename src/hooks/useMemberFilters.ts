@@ -1,12 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import {
-  ALL,
-  DEFAULT_MEMBER_FILTERS,
-  UNASSIGNED,
-  type MemberFilterState,
-  type SortOrder,
-} from '@/types/filters';
+import { ALL, DEFAULT_MEMBER_FILTERS, UNASSIGNED, type MemberFilterState, type SortOrder } from '@/types/filters';
 import { isResearchLineId } from '@/types/research';
 
 /**

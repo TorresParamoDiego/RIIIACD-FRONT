@@ -14,7 +14,7 @@ export function toSearchKey(value: string): string {
 
 /** Colapsa espacios repetidos (incluidos saltos de línea y espacios duros). */
 export function collapseWhitespace(value: string): string {
-  return value.replace(/[\s ]+/g, ' ').trim();
+  return value.replace(/[\s\u00A0]+/g, ' ').trim();
 }
 
 /** Iniciales para monogramas: primera letra del primer nombre y del primer apellido. */
@@ -29,7 +29,10 @@ export function getInitials(nombres: string, apellidos: string): string {
 }
 
 export function slugify(value: string): string {
-  return toSearchKey(value).replace(/[\s.@]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+  return toSearchKey(value)
+    .replace(/[\s.@]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
 }
 
 /** Pluralización simple en español para contadores. */

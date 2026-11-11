@@ -37,7 +37,7 @@ export function SectionTitle({
           id={id}
           className={cn(
             'font-display text-[1.875rem] leading-[1.12] font-semibold text-balance sm:text-[2.375rem]',
-            dark ? 'text-white' : 'text-navy-950',
+            dark ? 'text-white' : 'text-ink',
           )}
         >
           {title}

@@ -19,8 +19,10 @@ import { institutions as defaultInstitutions } from '@/data/institutions';
 import { researchLines as defaultResearchLines } from '@/data/researchLines';
 import type { Institution } from '@/types/institution';
 import {
+  BIOGRAFIA_MAX_LENGTH,
   EXCEL_COLUMNS,
   MEMBER_ROLES,
+  PERFIL_PROFESIONAL_MAX_LENGTH,
   type ExcelCellValue,
   type ExcelColumn,
   type ExcelMemberRow,
@@ -101,9 +103,7 @@ const HEADER_LOOKUP = new Map<string, ExcelColumn>(EXCEL_COLUMNS.map((col) => [n
  * lector de Excel) en una `ExcelMemberRow` con encabezados canónicos.
  * Tolera diferencias de mayúsculas, acentos, espacios y puntuación.
  */
-export function normalizeRawRow(
-  raw: Record<string, unknown>,
-): { row: ExcelMemberRow; unknownColumns: string[] } {
+export function normalizeRawRow(raw: Record<string, unknown>): { row: ExcelMemberRow; unknownColumns: string[] } {
   const row: ExcelMemberRow = {};
   const unknownColumns: string[] = [];
 
@@ -137,7 +137,22 @@ function toCellValue(value: unknown): ExcelCellValue {
 /*  2. Limpieza de valores                                                     */
 /* -------------------------------------------------------------------------- */
 
-const EMPTY_MARKERS = new Set(['', '-', '--', '.', 'na', 'n/a', 'n.a.', 'no aplica', 'ninguno', 'ninguna', 's/n', 'sin dato', 'null', 'undefined']);
+const EMPTY_MARKERS = new Set([
+  '',
+  '-',
+  '--',
+  '.',
+  'na',
+  'n/a',
+  'n.a.',
+  'no aplica',
+  'ninguno',
+  'ninguna',
+  's/n',
+  'sin dato',
+  'null',
+  'undefined',
+]);
 
 /**
  * Limpia una celda: convierte a texto, colapsa espacios y devuelve
@@ -209,11 +224,7 @@ export function normalizeEmail(value: ExcelCellValue): { email?: string; invalid
 /* -------------------------------------------------------------------------- */
 
 /** Prefijos frecuentes que no aportan a la identificación de la institución. */
-const INSTITUTION_NOISE = [
-  /^tecnologico nacional de mexico\s*(campus)?\s*/,
-  /^tecnm\s*(campus)?\s*/,
-  /^tec nm\s*(campus)?\s*/,
-];
+const INSTITUTION_NOISE = [/^tecnologico nacional de mexico\s*(campus)?\s*/, /^tecnm\s*(campus)?\s*/, /^tec nm\s*(campus)?\s*/];
 
 /** Clave comparable de una institución: "TecNM Campus Celaya" → "celaya". */
 export function institutionKey(value: string): string {
@@ -267,10 +278,7 @@ export interface LineResolution {
  *  2. Coincidencia con el nombre oficial completo.
  *  3. Puntuación por palabras clave (src/data/researchLines.ts).
  */
-export function resolveResearchLine(
-  value: ExcelCellValue,
-  context: MapperContext = defaultContext,
-): LineResolution {
+export function resolveResearchLine(value: ExcelCellValue, context: MapperContext = defaultContext): LineResolution {
   const text = cleanCell(value);
   if (!text) return { lineaId: null, ambigua: false };
   const key = toSearchKey(text);
@@ -360,7 +368,12 @@ export function mapExcelRow(
 
   const correoInstitucional = normalizeEmail(row['CORREO INSTITUCIONAL']);
   if (correoInstitucional.invalid) {
-    warnings.push({ fila, codigo: 'correo-invalido', campo: 'correoInstitucional', mensaje: 'Correo institucional con formato no válido.' });
+    warnings.push({
+      fila,
+      codigo: 'correo-invalido',
+      campo: 'correoInstitucional',
+      mensaje: 'Correo institucional con formato no válido.',
+    });
   }
   // El correo personal se valida pero nunca se publica.
   const correoPersonal = normalizeEmail(row['CORREO PERSONAL']);
@@ -422,7 +435,8 @@ export function mapExcelRow(
     programasAcademicos: cleanCell(row['Programas académicos de licenciatura y de posgrado que asociará a la red']),
 
     // El Excel no registra autorización de publicación: por defecto, no se publica.
-    autorizaCorreoPublico: false,
+    solicitaCorreoPublico: false,
+    consentimientoCorreo: null,
   };
 
   return { record, warnings };
@@ -481,10 +495,7 @@ function ensureUniqueIds(records: MemberRecord[]): MemberRecord[] {
  *   const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(workbook.Sheets[workbook.SheetNames[0]]);
  *   const { registros, advertencias, duplicados } = importMemberRows(rows);
  */
-export function importMemberRows(
-  rawRows: Record<string, unknown>[],
-  context: MapperContext = defaultContext,
-): ImportResult {
+export function importMemberRows(rawRows: Record<string, unknown>[], context: MapperContext = defaultContext): ImportResult {
   const advertencias: ImportWarning[] = [];
   const omitidas: number[] = [];
   const registros: MemberRecord[] = [];
@@ -519,7 +530,19 @@ export function importMemberRows(
  * cada campo se copia explícitamente; nunca se usa el operador spread sobre
  * el registro administrativo, para que un campo nuevo no se filtre por error.
  */
+/**
+ * Proyección a la vista pública con lista blanca explícita: solo se copian los
+ * campos de `PUBLIC_MEMBER_FIELDS`. Cualquier campo nuevo de `MemberRecord`
+ * queda fuera hasta que alguien lo añada aquí a propósito.
+ *
+ * El correo se publica solo si hay una autorización APROBADA
+ * (`consentimientoCorreo`); la solicitud del integrante no basta.
+ */
 export function toPublicMember(record: MemberRecord): PublicMember {
+  const biografia = record.biografia?.trim().slice(0, BIOGRAFIA_MAX_LENGTH);
+  const perfilProfesional = record.perfilProfesional?.trim().slice(0, PERFIL_PROFESIONAL_MAX_LENGTH);
+  const lineasPropuestas = record.lineasPropuestas?.filter((id) => id !== record.lineaInvestigacionId);
+
   return {
     id: record.id,
     nombres: record.nombres,
@@ -528,9 +551,10 @@ export function toPublicMember(record: MemberRecord): PublicMember {
     institucionId: record.institucionId,
     rol: record.rol ?? MEMBER_ROLES.integrante,
     lineaInvestigacionId: record.lineaInvestigacionId,
-    ...(record.autorizaCorreoPublico && record.correoInstitucional
-      ? { correoPublico: record.correoInstitucional }
-      : {}),
+    ...(record.consentimientoCorreo && record.correoInstitucional ? { correoPublico: record.correoInstitucional } : {}),
+    ...(biografia ? { biografia } : {}),
+    ...(perfilProfesional ? { perfilProfesional } : {}),
+    ...(lineasPropuestas && lineasPropuestas.length > 0 ? { lineasPropuestas } : {}),
     esDemostrativo: false,
   };
 }

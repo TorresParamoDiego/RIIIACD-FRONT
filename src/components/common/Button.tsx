@@ -9,11 +9,12 @@ const base =
   'inline-flex items-center justify-center gap-2 rounded-control font-semibold transition-[background-color,border-color,color,box-shadow,transform] duration-200 disabled:pointer-events-none disabled:opacity-55 active:translate-y-px whitespace-nowrap';
 
 const variants: Record<ButtonVariant, string> = {
-  primary: 'bg-electric-600 text-white shadow-[0_1px_0_rgb(255_255_255/0.2)_inset] hover:bg-electric-700',
-  secondary: 'border border-rule-strong bg-white text-navy-950 hover:border-navy-800 hover:bg-mist',
-  onDark: 'bg-white text-navy-950 hover:bg-signal',
+  // Verde de marca: blanco encima 5.81:1; en hover #0E6B2C, 6.65:1.
+  primary: 'bg-brand-green text-white shadow-[0_1px_0_rgb(255_255_255/0.2)_inset] hover:bg-brand-green-hover',
+  secondary: 'border border-rule-strong bg-white text-ink hover:border-brand-blue hover:bg-mist',
+  onDark: 'bg-white text-ink hover:bg-brand-green-50',
   onDarkOutline: 'border border-white/30 text-white hover:border-white/70 hover:bg-white/8',
-  quiet: 'text-electric-700 hover:text-navy-950 hover:bg-electric-50 px-2.5',
+  quiet: 'text-brand-green hover:text-ink hover:bg-brand-green-50 px-2.5',
 };
 
 const sizes: Record<ButtonSize, string> = {

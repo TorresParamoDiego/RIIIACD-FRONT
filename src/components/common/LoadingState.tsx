@@ -34,7 +34,7 @@ export function LoadingState({ label = 'Cargando información…', skeletonCount
 
   return (
     <div role="status" aria-live="polite" className={cn('flex items-center justify-center gap-3 py-16 text-ink-muted', className)}>
-      <LoaderCircle className="size-5 animate-spin text-electric-600" aria-hidden="true" />
+      <LoaderCircle className="size-5 animate-spin text-brand-green" aria-hidden="true" />
       <span>{label}</span>
     </div>
   );

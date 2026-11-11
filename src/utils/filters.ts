@@ -23,20 +23,12 @@ export function filterMembers(
     if (!matchesQuery(member, filters.query)) return false;
 
     if (filters.institucion === UNASSIGNED && member.institucionId !== null) return false;
-    if (
-      filters.institucion !== ALL &&
-      filters.institucion !== UNASSIGNED &&
-      member.institucionId !== filters.institucion
-    ) {
+    if (filters.institucion !== ALL && filters.institucion !== UNASSIGNED && member.institucionId !== filters.institucion) {
       return false;
     }
 
     if (filters.linea === UNASSIGNED && member.lineaInvestigacionId !== null) return false;
-    if (
-      filters.linea !== ALL &&
-      filters.linea !== UNASSIGNED &&
-      member.lineaInvestigacionId !== filters.linea
-    ) {
+    if (filters.linea !== ALL && filters.linea !== UNASSIGNED && member.lineaInvestigacionId !== filters.linea) {
       return false;
     }
 
@@ -93,12 +85,7 @@ export function countBy<T, K extends string>(items: T[], getKey: (item: T) => K 
 }
 
 export function hasActiveFilters(filters: MemberFilterState): boolean {
-  return (
-    filters.query.trim() !== '' ||
-    filters.institucion !== ALL ||
-    filters.linea !== ALL ||
-    filters.rol !== ALL
-  );
+  return filters.query.trim() !== '' || filters.institucion !== ALL || filters.linea !== ALL || filters.rol !== ALL;
 }
 
 /**

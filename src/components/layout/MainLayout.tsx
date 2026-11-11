@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation, useOutlet } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import { Footer } from './Footer';
 import { Navbar } from './Navbar';
 
@@ -20,7 +21,7 @@ export function MainLayout() {
     <div className="flex min-h-dvh flex-col">
       <a
         href="#contenido"
-        className="sr-only z-[60] rounded-control bg-white px-4 py-2 font-semibold text-navy-950 shadow-raised focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+        className="sr-only z-[60] rounded-control bg-white px-4 py-2 font-semibold text-ink shadow-raised focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
       >
         Saltar al contenido
       </a>
@@ -36,7 +37,7 @@ export function MainLayout() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.18, ease: 'easeOut' }}
         >
-          {outlet}
+          <ErrorBoundary resetKeys={[pathname]}>{outlet}</ErrorBoundary>
         </motion.main>
       </AnimatePresence>
       <Footer />

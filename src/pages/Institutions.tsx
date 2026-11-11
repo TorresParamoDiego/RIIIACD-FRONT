@@ -59,7 +59,7 @@ export default function Institutions() {
       <section aria-labelledby="composicion-titulo" className="py-14 sm:py-20">
         <Reveal className="container-page grid gap-10 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-5">
-            <h2 id="composicion-titulo" className="font-display text-[1.75rem] leading-tight font-semibold text-navy-950 sm:text-[2.125rem]">
+            <h2 id="composicion-titulo" className="font-display text-[1.75rem] leading-tight font-semibold text-ink sm:text-[2.125rem]">
               Composición de la red
             </h2>
             <p className="mt-4 text-[1.0625rem] leading-relaxed text-ink-muted">
@@ -81,7 +81,7 @@ export default function Institutions() {
         <div className="container-page">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <h2 id="catalogo-titulo" className="font-display text-[1.75rem] leading-tight font-semibold text-navy-950 sm:text-[2.125rem]">
+              <h2 id="catalogo-titulo" className="font-display text-[1.75rem] leading-tight font-semibold text-ink sm:text-[2.125rem]">
                 Catálogo de instituciones
               </h2>
               <p className="mt-3 max-w-[60ch] text-ink-muted">
@@ -103,8 +103,8 @@ export default function Institutions() {
                     className={cn(
                       'inline-flex h-10 items-center gap-2 rounded-full border px-4 text-[0.9375rem] font-medium transition-colors',
                       active
-                        ? 'border-navy-950 bg-navy-950 text-white'
-                        : 'border-rule-strong bg-white text-navy-950 hover:border-navy-800',
+                        ? 'border-brand-blue bg-brand-blue text-white'
+                        : 'border-rule-strong bg-white text-ink hover:border-brand-blue',
                     )}
                   >
                     {option.label}
@@ -117,8 +117,8 @@ export default function Institutions() {
 
           {hasDemo ? (
             <DemoNotice title="Incluye instituciones demostrativas" className="mt-8">
-              Las tarjetas marcadas como «Demo» no corresponden a instituciones reales; sirven para probar el catálogo
-              mientras se integra la información oficial.
+              Las tarjetas marcadas como «Demo» no corresponden a instituciones reales; sirven para probar el catálogo mientras se integra
+              la información oficial.
             </DemoNotice>
           ) : null}
 

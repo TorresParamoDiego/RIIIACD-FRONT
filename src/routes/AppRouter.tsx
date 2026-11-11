@@ -14,6 +14,7 @@ const Members = lazy(() => import('@/pages/Members'));
 const Institutions = lazy(() => import('@/pages/Institutions'));
 const Contact = lazy(() => import('@/pages/Contact'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
+const MemberUpdate = lazy(() => import('@/pages/MemberUpdate'));
 
 function PageFallback() {
   return (
@@ -39,6 +40,7 @@ export function AppRouter() {
           <Route path={ROUTES.integrantes} element={withSuspense(<Members />)} />
           <Route path={ROUTES.instituciones} element={withSuspense(<Institutions />)} />
           <Route path={ROUTES.contacto} element={withSuspense(<Contact />)} />
+          <Route path={`${ROUTES.actualizar}/:token`} element={withSuspense(<MemberUpdate />)} />
           <Route path="*" element={withSuspense(<NotFound />)} />
         </Route>
       </Routes>

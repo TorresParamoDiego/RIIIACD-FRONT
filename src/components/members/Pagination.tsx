@@ -13,7 +13,7 @@ export function Pagination({ page, totalPages, onPageChange }: PaginationProps) 
   const pages = getPageWindow(page, totalPages);
 
   const arrowClass =
-    'inline-flex h-10 items-center gap-1 rounded-control px-3 text-[0.9375rem] font-medium text-navy-950 hover:bg-mist disabled:pointer-events-none disabled:text-ink-subtle/60';
+    'inline-flex h-10 items-center gap-1 rounded-control px-3 text-[0.9375rem] font-medium text-ink hover:bg-mist disabled:pointer-events-none disabled:text-ink-subtle/60';
 
   return (
     <nav aria-label="Paginación del directorio" className="flex items-center justify-between gap-2 sm:justify-center">
@@ -37,7 +37,7 @@ export function Pagination({ page, totalPages, onPageChange }: PaginationProps) 
                 aria-label={`Página ${p}`}
                 className={cn(
                   'grid size-10 place-items-center rounded-control text-[0.9375rem] font-medium tabular-nums',
-                  p === page ? 'bg-navy-950 text-white' : 'text-navy-950 hover:bg-mist',
+                  p === page ? 'bg-brand-blue text-white' : 'text-ink hover:bg-mist',
                 )}
               >
                 {p}

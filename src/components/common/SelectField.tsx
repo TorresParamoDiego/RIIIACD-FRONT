@@ -16,7 +16,7 @@ export function SelectField<T extends string>({ label, value, options, onChange,
   const id = useId();
   return (
     <div className={cn('flex min-w-0 flex-col gap-1.5', className)}>
-      <label htmlFor={id} className="text-sm font-medium text-navy-950">
+      <label htmlFor={id} className="text-sm font-medium text-ink">
         {label}
       </label>
       <div className="relative">
@@ -35,10 +35,7 @@ export function SelectField<T extends string>({ label, value, options, onChange,
             </option>
           ))}
         </select>
-        <ChevronDown
-          className="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 text-ink-subtle"
-          aria-hidden="true"
-        />
+        <ChevronDown className="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 text-ink-subtle" aria-hidden="true" />
       </div>
     </div>
   );

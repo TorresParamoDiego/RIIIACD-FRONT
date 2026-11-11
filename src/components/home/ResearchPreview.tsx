@@ -18,11 +18,7 @@ export function ResearchPreview() {
             title="Cinco líneas de investigación"
             description="Cada línea reúne a integrantes de distintas instituciones en torno a un campo de la inteligencia artificial y la ciencia de datos, bajo la coordinación de una persona responsable."
             action={
-              <ButtonLink
-                to={ROUTES.lineas}
-                variant="secondary"
-                icon={<ArrowRight className="size-4" aria-hidden="true" />}
-              >
+              <ButtonLink to={ROUTES.lineas} variant="secondary" icon={<ArrowRight className="size-4" aria-hidden="true" />}>
                 Ver todas las líneas
               </ButtonLink>
             }

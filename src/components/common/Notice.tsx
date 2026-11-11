@@ -27,7 +27,11 @@ export function DemoNotice({ title, children, className }: NoticeProps) {
 }
 
 /** Señala contenido institucional que aún no se ha documentado (en lugar de inventarlo). */
-export function PendingContent({ title = 'Contenido en preparación', children, className }: Partial<Pick<NoticeProps, 'title'>> & Omit<NoticeProps, 'title'>) {
+export function PendingContent({
+  title = 'Contenido en preparación',
+  children,
+  className,
+}: Partial<Pick<NoticeProps, 'title'>> & Omit<NoticeProps, 'title'>) {
   return (
     <aside
       className={cn(
@@ -35,9 +39,9 @@ export function PendingContent({ title = 'Contenido en preparación', children, 
         className,
       )}
     >
-      <Hourglass className="mt-0.5 size-5 shrink-0 text-navy-800/70" aria-hidden="true" />
+      <Hourglass className="mt-0.5 size-5 shrink-0 text-brand-blue/70" aria-hidden="true" />
       <div>
-        <p className="font-semibold text-navy-950">{title}</p>
+        <p className="font-semibold text-ink">{title}</p>
         <div className="mt-0.5">{children}</div>
       </div>
     </aside>

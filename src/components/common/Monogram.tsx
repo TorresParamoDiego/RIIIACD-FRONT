@@ -22,7 +22,7 @@ const sizes = {
  * Avatar del integrante. Muestra la fotografía cuando exista (`fotoUrl`) y,
  * mientras tanto, las iniciales. No se generan imágenes de personas.
  */
-export function Monogram({ nombres, apellidos, color = '#123C68', fotoUrl, size = 'md', className }: MonogramProps) {
+export function Monogram({ nombres, apellidos, color = '#1B396A', fotoUrl, size = 'md', className }: MonogramProps) {
   if (fotoUrl) {
     return (
       <img

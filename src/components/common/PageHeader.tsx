@@ -20,13 +20,12 @@ export function PageHeader({ title, description, breadcrumbs = [], children }: P
   const trail: Crumb[] = [{ label: 'Inicio', to: ROUTES.inicio }, ...breadcrumbs];
 
   return (
-    <header className="on-dark relative overflow-hidden bg-navy-950 text-white">
+    <header className="on-dark relative overflow-hidden bg-brand-blue text-white">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 opacity-[0.5]"
         style={{
-          backgroundImage:
-            'radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.09) 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.09) 1px, transparent 0)',
           backgroundSize: '28px 28px',
           maskImage: 'linear-gradient(100deg, transparent 35%, black 85%)',
         }}
@@ -53,13 +52,9 @@ export function PageHeader({ title, description, breadcrumbs = [], children }: P
             })}
           </ol>
         </nav>
-        <h1 className="mt-5 max-w-4xl font-display text-[2.25rem] leading-[1.08] font-semibold text-balance sm:text-[3rem]">
-          {title}
-        </h1>
+        <h1 className="mt-5 max-w-4xl font-display text-[2.25rem] leading-[1.08] font-semibold text-balance sm:text-[3rem]">{title}</h1>
         {description ? (
-          <div className="mt-5 max-w-[62ch] text-[1.0625rem] leading-relaxed text-white/75 text-pretty sm:text-lg">
-            {description}
-          </div>
+          <div className="mt-5 max-w-[62ch] text-[1.0625rem] leading-relaxed text-white/75 text-pretty sm:text-lg">{description}</div>
         ) : null}
         {children ? <div className="mt-8">{children}</div> : null}
       </div>

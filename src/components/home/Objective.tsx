@@ -10,7 +10,7 @@ export function Objective({ headingLevel: Heading = 'h2' }: ObjectiveProps) {
   return (
     <section aria-labelledby="objetivo-titulo" className="py-20 sm:py-28">
       <div className="container-page">
-        <Reveal className="on-dark relative overflow-hidden rounded-panel bg-navy-800 px-6 py-14 text-white sm:px-14 sm:py-20">
+        <Reveal className="on-dark relative overflow-hidden rounded-panel bg-brand-blue px-6 py-14 text-white sm:px-14 sm:py-20">
           <svg
             aria-hidden="true"
             className="pointer-events-none absolute -top-10 -right-10 h-72 w-72 text-white/10 sm:h-96 sm:w-96"
@@ -30,13 +30,11 @@ export function Objective({ headingLevel: Heading = 'h2' }: ObjectiveProps) {
             </g>
           </svg>
 
-          <Heading id="objetivo-titulo" className="relative text-[1.0625rem] font-semibold text-signal">
+          <Heading id="objetivo-titulo" className="relative text-[1.0625rem] font-semibold text-brand-accent">
             Objetivo general
           </Heading>
           <blockquote className="relative mt-6 max-w-4xl">
-            <p className="font-display text-[1.5rem] leading-[1.3] font-medium text-balance sm:text-[2.125rem]">
-              {objetivoGeneral}
-            </p>
+            <p className="font-display text-[1.5rem] leading-[1.3] font-medium text-balance sm:text-[2.125rem]">{objetivoGeneral}</p>
           </blockquote>
         </Reveal>
       </div>

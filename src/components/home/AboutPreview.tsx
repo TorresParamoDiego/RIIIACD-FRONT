@@ -10,7 +10,7 @@ export function AboutPreview() {
       <Reveal className="container-page grid gap-10 lg:grid-cols-12 lg:gap-16">
         <h2
           id="presentacion-titulo"
-          className="font-display text-[2rem] leading-[1.1] font-semibold text-navy-950 text-balance sm:text-[2.75rem] lg:col-span-5"
+          className="font-display text-[2rem] leading-[1.1] font-semibold text-ink text-balance sm:text-[2.75rem] lg:col-span-5"
         >
           {presentacion.titulo}
         </h2>

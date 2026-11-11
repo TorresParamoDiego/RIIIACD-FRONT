@@ -1,6 +1,32 @@
 import type { ResearchLineId } from './research';
 
 /* -------------------------------------------------------------------------- */
+/*  Límites del perfil editable (brief fase 2, sección 1.3)                     */
+/* -------------------------------------------------------------------------- */
+
+/** Biografía académica: texto libre, máximo 1,000 caracteres (decisión cerrada). */
+export const BIOGRAFIA_MAX_LENGTH = 1000;
+
+/**
+ * Perfil profesional: texto breve. PROPUESTO: 500 caracteres.
+ * PENDIENTE: confirmar con la coordinación (forma parte del punto 4.7 del brief).
+ */
+export const PERFIL_PROFESIONAL_MAX_LENGTH = 500;
+
+/**
+ * Registro de la autorización aprobada para publicar el correo institucional
+ * (tabla `consents` del backend). Sin este registro, el correo nunca se publica.
+ */
+export interface EmailConsent {
+  /** Fecha ISO 8601 en que la coordinación aprobó la autorización. */
+  aprobadoEn: string;
+  /** Versión del texto de autorización que aceptó el integrante. */
+  versionTexto: string;
+  /** Identificador de la persona de la coordinación que la aprobó. */
+  aprobadoPor: string;
+}
+
+/* -------------------------------------------------------------------------- */
 /*  1. Fila cruda del Excel                                                    */
 /* -------------------------------------------------------------------------- */
 
@@ -87,11 +113,25 @@ export interface MemberRecord {
   infraestructura?: string;
   programasAcademicos?: string;
 
+  /* --- Perfil editable por el integrante (solo valores YA aprobados) ------- */
+
+  /** Biografía académica aprobada. Máximo `BIOGRAFIA_MAX_LENGTH` caracteres. */
+  biografia?: string;
+  /** Perfil profesional aprobado. Máximo `PERFIL_PROFESIONAL_MAX_LENGTH` caracteres. */
+  perfilProfesional?: string;
+  /** Líneas oficiales adicionales aprobadas a propuesta del integrante. */
+  lineasPropuestas?: ResearchLineId[];
+
+  /* --- Correo público: solicitud y aprobación van separadas --------------- */
+
   /**
-   * Autorización explícita para publicar el correo institucional.
+   * Lo que pidió el integrante en su formulario. NO basta para publicar el
+   * correo: es solo una solicitud pendiente de revisión.
    * El Excel actual no tiene esta columna, por lo que el valor por defecto es `false`.
    */
-  autorizaCorreoPublico: boolean;
+  solicitaCorreoPublico: boolean;
+  /** Autorización aprobada por la coordinación. Es la única condición para publicar. */
+  consentimientoCorreo: EmailConsent | null;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -110,8 +150,19 @@ export interface PublicMember {
   institucionId: string | null;
   rol: string;
   lineaInvestigacionId: ResearchLineId | null;
-  /** Solo presente cuando el integrante autorizó su publicación. */
+  /**
+   * Correo institucional público. Solo presente cuando existe una autorización
+   * APROBADA (`MemberRecord.consentimientoCorreo`); la solicitud del integrante
+   * por sí sola no lo publica.
+   */
   correoPublico?: string;
+
+  /** Biografía académica aprobada (≤ 1,000 caracteres). */
+  biografia?: string;
+  /** Perfil profesional aprobado. */
+  perfilProfesional?: string;
+  /** Líneas oficiales adicionales, ya aprobadas por la coordinación. */
+  lineasPropuestas?: ResearchLineId[];
 
   /** Preparado para fases posteriores. */
   fotoUrl?: string;
@@ -121,7 +172,11 @@ export interface PublicMember {
   esDemostrativo: boolean;
 }
 
-/** Campos que la interfaz pública tiene permitido mostrar. */
+/**
+ * Lista blanca: campos que la interfaz pública tiene permitido mostrar.
+ * El CVU (TecNM o CONAHCyT), el teléfono, el correo personal, los archivos y
+ * la carta compromiso NUNCA forman parte de esta lista.
+ */
 export const PUBLIC_MEMBER_FIELDS = [
   'id',
   'tratamiento',
@@ -132,6 +187,9 @@ export const PUBLIC_MEMBER_FIELDS = [
   'rol',
   'lineaInvestigacionId',
   'correoPublico',
+  'biografia',
+  'perfilProfesional',
+  'lineasPropuestas',
   'fotoUrl',
   'perfilAcademicoUrl',
   'esDemostrativo',

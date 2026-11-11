@@ -86,8 +86,7 @@ export default function Members() {
   const page = paginate(results, filters.pagina, MEMBERS_PAGE_SIZE);
 
   const activeCount =
-    [filters.institucion, filters.linea, filters.rol].filter((value) => value !== ALL).length +
-    (filters.query.trim() ? 1 : 0);
+    [filters.institucion, filters.linea, filters.rol].filter((value) => value !== ALL).length + (filters.query.trim() ? 1 : 0);
 
   const institutionNameFor = (member: PublicMember): string => {
     const inst = institutionById.get(member.institucionId ?? '');
@@ -113,26 +112,20 @@ export default function Members() {
         <div className="container-page">
           {membersResource.includesDemoData ? (
             <DemoNotice title="Directorio con datos demostrativos" className="mb-8">
-              Se muestran los responsables documentados de la red y registros de prueba marcados como «Demo». El padrón
-              oficial de {networkStatistics.integrantes} integrantes se incorporará a partir del registro institucional.
+              Se muestran los responsables documentados de la red y registros de prueba marcados como «Demo». El padrón oficial de{' '}
+              {networkStatistics.integrantes} integrantes se incorporará a partir del registro institucional.
             </DemoNotice>
           ) : null}
 
           <div className="rounded-panel border border-rule bg-mist/60 p-5 sm:p-6">
             <MemberSearch value={filters.query} onChange={(query) => setFilters({ query })} />
             <div className="mt-5">
-              <MemberFilters
-                filters={filters}
-                options={options}
-                activeCount={activeCount}
-                onChange={setFilters}
-                onReset={resetFilters}
-              />
+              <MemberFilters filters={filters} options={options} activeCount={activeCount} onChange={setFilters} onReset={resetFilters} />
             </div>
           </div>
 
           <div className="mt-10 flex scroll-mt-28 flex-wrap items-baseline justify-between gap-2" ref={resultsRef}>
-            <h2 id="resultados-titulo" className="text-[1.0625rem] font-semibold text-navy-950">
+            <h2 id="resultados-titulo" className="text-[1.0625rem] font-semibold text-ink">
               Resultados
             </h2>
             {status === 'success' ? (

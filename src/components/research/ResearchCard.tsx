@@ -42,14 +42,14 @@ export function ResearchCard({ line, responsable, variant = 'compact', className
         </div>
 
         <div>
-          <h2 id={headingId} className="font-display text-[1.5rem] leading-snug font-semibold text-navy-950 text-balance">
+          <h2 id={headingId} className="font-display text-[1.5rem] leading-snug font-semibold text-ink text-balance">
             {line.nombre}
           </h2>
           <p className="mt-3 max-w-[70ch] leading-relaxed text-ink-muted">{line.descripcion}</p>
 
           <ul className="mt-5 flex flex-wrap gap-2" aria-label="Ejes temáticos">
             {line.ejes.map((eje) => (
-              <li key={eje} className="rounded-full border border-rule bg-mist px-3 py-1 text-sm text-navy-800">
+              <li key={eje} className="rounded-full border border-rule bg-mist px-3 py-1 text-sm text-brand-blue">
                 {eje}
               </li>
             ))}
@@ -57,22 +57,19 @@ export function ResearchCard({ line, responsable, variant = 'compact', className
 
           <div className="mt-6 flex flex-col gap-5 border-t border-rule pt-5 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-[0.9375rem] text-ink-muted">
-              Responsable:{' '}
-              <span className="font-semibold text-navy-950">
-                {responsable ? formatMemberName(responsable) : 'Por confirmar'}
-              </span>
+              Responsable: <span className="font-semibold text-ink">{responsable ? formatMemberName(responsable) : 'Por confirmar'}</span>
             </p>
             <div className="flex flex-wrap gap-2">
               <Link
                 to={`${ROUTES.integrantes}?linea=${line.id}`}
-                className="inline-flex h-10 items-center gap-2 rounded-control border border-rule-strong px-3.5 text-[0.9375rem] font-medium text-navy-950 hover:border-navy-800 hover:bg-mist"
+                className="inline-flex h-10 items-center gap-2 rounded-control border border-rule-strong px-3.5 text-[0.9375rem] font-medium text-ink hover:border-brand-blue hover:bg-mist"
               >
                 <Users className="size-4" aria-hidden="true" />
                 Integrantes
               </Link>
               <Link
                 to={detailPath}
-                className="inline-flex h-10 items-center gap-2 rounded-control bg-navy-950 px-3.5 text-[0.9375rem] font-semibold text-white hover:bg-navy-800"
+                className="inline-flex h-10 items-center gap-2 rounded-control bg-brand-blue px-3.5 text-[0.9375rem] font-semibold text-white hover:bg-brand-blue-deep"
               >
                 Ver la línea
                 <ArrowRight className="size-4" aria-hidden="true" />
@@ -93,11 +90,7 @@ export function ResearchCard({ line, responsable, variant = 'compact', className
         className,
       )}
     >
-      <span
-        className="absolute inset-x-6 top-0 h-[3px] rounded-b-full"
-        style={{ backgroundColor: theme.color }}
-        aria-hidden="true"
-      />
+      <span className="absolute inset-x-6 top-0 h-[3px] rounded-b-full" style={{ backgroundColor: theme.color }} aria-hidden="true" />
       <div className="flex items-center justify-between">
         <span
           className="grid size-11 place-items-center rounded-control"
@@ -110,7 +103,7 @@ export function ResearchCard({ line, responsable, variant = 'compact', className
         </span>
       </div>
 
-      <h3 id={headingId} className="mt-5 text-[1.125rem] leading-snug font-semibold text-navy-950 text-balance">
+      <h3 id={headingId} className="mt-5 text-[1.125rem] leading-snug font-semibold text-ink text-balance">
         <Link to={detailPath} className="rounded after:absolute after:inset-0 after:rounded-card">
           {line.nombre}
         </Link>
@@ -120,12 +113,10 @@ export function ResearchCard({ line, responsable, variant = 'compact', className
       <p className="mt-auto flex items-end justify-between gap-3 pt-6 text-sm text-ink-muted">
         <span>
           Responsable
-          <span className="mt-0.5 block font-semibold text-navy-950">
-            {responsable ? formatMemberName(responsable) : 'Por confirmar'}
-          </span>
+          <span className="mt-0.5 block font-semibold text-ink">{responsable ? formatMemberName(responsable) : 'Por confirmar'}</span>
         </span>
         <ArrowRight
-          className="size-5 shrink-0 text-ink-subtle transition-[color,transform] group-hover:translate-x-0.5 group-hover:text-electric-600"
+          className="size-5 shrink-0 text-ink-subtle transition-[color,transform] group-hover:translate-x-0.5 group-hover:text-brand-green"
           aria-hidden="true"
         />
       </p>

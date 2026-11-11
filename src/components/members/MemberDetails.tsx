@@ -5,6 +5,7 @@ import { Building2, Mail, X } from 'lucide-react';
 import { Monogram } from '@/components/common/Monogram';
 import { researchLinePath } from '@/config/site';
 import { getInstitutionTypeInfo } from '@/data/institutions';
+import { researchLines } from '@/data/researchLines';
 import { NEUTRAL_LINE_COLOR, getLineTheme } from '@/theme/lineThemes';
 import type { Institution } from '@/types/institution';
 import type { PublicMember } from '@/types/member';
@@ -68,6 +69,7 @@ export function MemberDetails({ member, institution, institutionName, line, onCl
   }, [open]);
 
   const color = getLineTheme(member?.lineaInvestigacionId)?.color ?? NEUTRAL_LINE_COLOR;
+  const extraLines = researchLines.filter((l) => member?.lineasPropuestas?.includes(l.id) && l.id !== member.lineaInvestigacionId);
 
   return (
     <AnimatePresence>
@@ -80,7 +82,7 @@ export function MemberDetails({ member, institution, institutionName, line, onCl
           transition={{ duration: 0.22 }}
         >
           <motion.div
-            className="absolute inset-0 bg-navy-950/55 backdrop-blur-[2px]"
+            className="absolute inset-0 bg-ink/55 backdrop-blur-[2px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -107,15 +109,15 @@ export function MemberDetails({ member, institution, institutionName, line, onCl
                   ref={closeRef}
                   type="button"
                   onClick={onClose}
-                  className="-mt-1 -mr-2 grid size-10 place-items-center rounded-control text-ink-subtle hover:bg-mist hover:text-navy-950"
+                  className="-mt-1 -mr-2 grid size-10 place-items-center rounded-control text-ink-subtle hover:bg-mist hover:text-ink"
                   aria-label="Cerrar ficha"
                 >
                   <X className="size-5" aria-hidden="true" />
                 </button>
               </div>
 
-              <p className="mt-5 text-[0.9375rem] font-semibold text-electric-700">{member.rol}</p>
-              <h2 id="ficha-titulo" className="mt-1 font-display text-[1.625rem] leading-tight font-semibold text-navy-950 text-balance">
+              <p className="mt-5 text-[0.9375rem] font-semibold text-brand-green">{member.rol}</p>
+              <h2 id="ficha-titulo" className="mt-1 font-display text-[1.625rem] leading-tight font-semibold text-ink text-balance">
                 {formatMemberName(member)}
               </h2>
               {member.esDemostrativo ? (
@@ -124,10 +126,19 @@ export function MemberDetails({ member, institution, institutionName, line, onCl
                 </p>
               ) : null}
 
+              {member.perfilProfesional ? (
+                <p className="mt-4 text-[1.0625rem] leading-snug font-medium text-ink-muted">{member.perfilProfesional}</p>
+              ) : null}
+              {member.biografia ? (
+                <section aria-label="Biografía académica" className="mt-5">
+                  <p className="text-[0.9375rem] leading-relaxed whitespace-pre-line text-ink-muted">{member.biografia}</p>
+                </section>
+              ) : null}
+
               <dl className="mt-7 divide-y divide-rule border-y border-rule">
                 <div className="grid gap-1 py-4 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-4">
                   <dt className="text-sm text-ink-subtle">Institución de adscripción</dt>
-                  <dd className="flex items-start gap-2 text-navy-950">
+                  <dd className="flex items-start gap-2 text-ink">
                     <Building2 className="mt-0.5 size-4 shrink-0 text-ink-subtle" aria-hidden="true" />
                     <span>
                       {institutionName}
@@ -139,11 +150,11 @@ export function MemberDetails({ member, institution, institutionName, line, onCl
                 </div>
                 <div className="grid gap-1 py-4 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-4">
                   <dt className="text-sm text-ink-subtle">Línea de investigación</dt>
-                  <dd className="text-navy-950">
+                  <dd className="text-ink">
                     {line ? (
                       <Link
                         to={researchLinePath(line.slug)}
-                        className="underline decoration-rule-strong underline-offset-4 hover:decoration-electric-600"
+                        className="underline decoration-rule-strong underline-offset-4 hover:decoration-brand-green"
                       >
                         Línea {line.numero}: {line.nombre}
                       </Link>
@@ -152,19 +163,40 @@ export function MemberDetails({ member, institution, institutionName, line, onCl
                     )}
                   </dd>
                 </div>
+                {extraLines.length > 0 ? (
+                  <div className="grid gap-1 py-4 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-4">
+                    <dt className="text-sm text-ink-subtle">También colabora en</dt>
+                    <dd className="text-ink">
+                      <ul className="space-y-1">
+                        {extraLines.map((extra) => (
+                          <li key={extra.id}>
+                            <Link
+                              to={researchLinePath(extra.slug)}
+                              className="underline decoration-rule-strong underline-offset-4 hover:decoration-brand-green"
+                            >
+                              Línea {extra.numero}: {extra.nombreCorto}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </dd>
+                  </div>
+                ) : null}
                 <div className="grid gap-1 py-4 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-4">
                   <dt className="text-sm text-ink-subtle">Correo institucional</dt>
                   <dd>
                     {member.correoPublico ? (
                       <a
                         href={`mailto:${member.correoPublico}`}
-                        className="inline-flex items-center gap-2 break-all text-electric-700 hover:text-navy-950"
+                        className="inline-flex items-center gap-2 break-all text-brand-green hover:text-ink"
                       >
                         <Mail className="size-4 shrink-0" aria-hidden="true" />
                         {member.correoPublico}
                       </a>
                     ) : (
-                      <span className="text-sm text-ink-muted">No publicado. Solo se muestra con autorización del integrante.</span>
+                      <span className="text-sm text-ink-muted">
+                        No publicado. Solo se muestra con autorización del integrante aprobada por la coordinación.
+                      </span>
                     )}
                   </dd>
                 </div>
@@ -175,7 +207,7 @@ export function MemberDetails({ member, institution, institutionName, line, onCl
                   href={member.perfilAcademicoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-6 inline-flex text-[0.9375rem] font-semibold text-electric-700 hover:text-navy-950"
+                  className="mt-6 inline-flex text-[0.9375rem] font-semibold text-brand-green hover:text-ink"
                 >
                   Ver perfil académico
                 </a>

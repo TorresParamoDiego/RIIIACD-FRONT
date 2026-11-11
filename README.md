@@ -1,4 +1,4 @@
-# RIIIACD — Portal institucional (fase 1: frontend)
+# RIIIACD — Portal institucional (frontend, fase 2)
 
 Frontend del portal de la **Red de Investigación e Innovación en Inteligencia Artificial y Ciencia de Datos (RIIIACD)**, del entorno del Tecnológico Nacional de México (TecNM).
 
@@ -19,9 +19,14 @@ npm run dev        # servidor de desarrollo en http://localhost:5173
 Otros comandos:
 
 ```bash
-npm run typecheck  # verificación de tipos (tsc -b)
-npm run build      # verificación de tipos + compilación de producción en dist/
-npm run preview    # sirve la compilación de producción
+npm run typecheck     # verificación de tipos (tsc -b), incluye el contrato con la API
+npm run lint          # ESLint
+npm run format        # Prettier (format:check para solo verificar)
+npm run test          # Vitest
+npm run build         # verificación de tipos + compilación de producción en dist/
+npm run check         # todo lo anterior en orden
+npm run api:types     # regenera src/types/api.generated.ts desde ../riiiacd-back/openapi.json
+npm run preview       # sirve la compilación de producción
 ```
 
 Variables de entorno opcionales: copia `.env.example` como `.env.local`.
@@ -139,19 +144,22 @@ const { registros, duplicados, advertencias } = importMemberRows(rows);
 // 3) publicar solo toPublicMembers(registros)
 ```
 
-## Integración futura con API
+## Integración con la API (`riiiacd-back`)
 
-- `services/http.ts` incluye `apiGet<T>()` y `ApiError`. Al definir `VITE_API_BASE_URL`, `membersService` llama a `GET /members` e `institutionsService` a `GET /institutions`.
-- Contratos esperados: `PublicMember[]` e `Institution[]` (ver `src/types`).
-- El formulario de contacto (`components/contact/ContactForm.tsx`) no envía nada: valida, simula la preparación y ofrece abrir el mensaje en la aplicación de correo. Para conectarlo, reemplazar la función `prepare` por la llamada al endpoint (p. ej. `POST /contact`) con protección anti-spam en el servidor.
-- Sin autenticación ni panel administrativo en esta fase.
+- Define `VITE_API_BASE_URL` (p. ej. `http://localhost:8000`). Sin ella, el sitio usa los datos locales de `src/data`.
+- `services/http.ts` incluye `apiGet<T>()`, `apiSend<T>()` y `ApiError` (con el `codigo` de error del backend).
+- `membersService` lee `GET /members` (paginado); `institutionsService`, `GET /institutions`; `memberUpdateService`, el flujo de `/actualizar/:token`.
+- Los tipos se generan desde el OpenAPI del backend (`npm run api:types`) y `src/types/api.contract.ts` comprueba en compilación que coinciden con los tipos escritos a mano.
+- Página de actualización sin API: `/actualizar/demo`, `/actualizar/expirado`, `/actualizar/usado`.
+- Pendientes: conectar el formulario de contacto a `POST /contact` y pasar los filtros del directorio a la API. Ver `documentacion.md`, sección 3.3.
 
 ## Diseño
 
-- **Tipografía:** Archivo (Google Fonts), familia variable con eje de anchura: titulares en versión expandida (`font-display`), texto en anchura normal.
-- **Color:** paleta institucional del brief como tokens en `src/styles/globals.css` (`navy-950` #071B35, `navy-800` #123C68, `electric-600` #2563EB, `signal` #22D3EE, `mist` #F3F6FA). Cada línea de investigación tiene un tono de la familia azul-cian que se repite en el grafo, las tarjetas, los avatares y los filtros.
+- **Tipografía:** Archivo alojada localmente con `@fontsource-variable/archivo`, familia variable con eje de anchura: titulares en versión expandida (`font-display`), texto en anchura normal.
+- **Color:** tokens de marca en `src/styles/globals.css`: azul `brand-blue` #1B396A (hero, pie y bandas oscuras), verde `brand-green` #117533 (botones principales y acentos; hover #0E6B2C), `brand-accent` #A7F3D0 para acentos sobre el azul, `ink` #071B35 para texto y neutros. Cada línea de investigación tiene un tono de la familia azul-verde (`src/theme/lineThemes.ts`). `src/utils/contrast.test.ts` verifica que todas las combinaciones de texto cumplan AA (≥ 4.5:1). Pantone 294 C es solo una referencia provisional y no se usa.
 - **Elemento principal:** el grafo del hero se genera de forma determinista con un nodo por integrante, agrupado en cinco núcleos (uno por línea) unidos entre sí. Es ilustrativo: reparte los nodos de forma equitativa y no representa la afiliación real.
 - **Movimiento:** una única secuencia al cargar el grafo, aparición discreta de secciones y transición breve entre páginas; todo se desactiva con la preferencia del sistema «reducir movimiento».
+- **Errores:** `ErrorBoundary` por página y uno exterior; un fallo de render muestra un mensaje con opciones para reintentar o volver al inicio.
 - **Accesibilidad:** enlace «Saltar al contenido», foco visible, navegación por teclado, diálogo con foco atrapado y cierre con Esc, etiquetas en formularios, mensajes de error asociados (`aria-describedby`), regiones `aria-live` para resultados, contraste AA en texto.
 
 ## Logotipos

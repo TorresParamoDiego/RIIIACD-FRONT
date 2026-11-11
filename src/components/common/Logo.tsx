@@ -8,13 +8,16 @@ interface LogoMarkProps {
 
 /**
  * Símbolo de RIIIACD: cinco nodos (las cinco líneas) unidos en una sola red.
- * Sustituible por el logotipo oficial colocando el archivo en src/assets/logos.
+ * Símbolo PROVISIONAL: se sustituirá por los logotipos oficiales del TecNM y del
+ * Tecnológico de Celaya (SVG o PNG) cuando se reciban (pendiente 4.3 del brief).
  */
 export function LogoMark({ className, tone = 'light' }: LogoMarkProps) {
   const node = tone === 'dark' ? '#FFFFFF' : '#071B35';
+  // Trazos: acento claro sobre azul; verde de marca sobre fondo claro.
+  const stroke = tone === 'dark' ? '#A7F3D0' : '#117533';
   return (
     <svg viewBox="0 0 40 40" className={cn('shrink-0', className)} aria-hidden="true" focusable="false">
-      <g stroke="#22D3EE" strokeWidth="1.8" strokeLinecap="round">
+      <g stroke={stroke} strokeWidth="1.8" strokeLinecap="round">
         <path d="M20 6 L33 15.5 L28.5 31 L11.5 31 L7 15.5 Z" fill="none" opacity="0.9" />
         <path d="M20 6 L28.5 31 M7 15.5 L33 15.5" opacity="0.55" />
       </g>
@@ -41,7 +44,7 @@ export function Logo({ tone = 'light', showDescriptor = true, className }: LogoP
     <span className={cn('flex items-center gap-2.5', className)}>
       <LogoMark className="size-9" tone={tone} />
       <span className="flex flex-col leading-none">
-        <span className={cn('font-display text-[1.1875rem] font-bold tracking-tight', dark ? 'text-white' : 'text-navy-950')}>
+        <span className={cn('font-display text-[1.1875rem] font-bold tracking-tight', dark ? 'text-white' : 'text-ink')}>
           {siteConfig.siglas}
         </span>
         {showDescriptor ? (

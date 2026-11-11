@@ -19,7 +19,7 @@ function OrganizationChart() {
   const leader = getDocumentedMemberById(siteConfig.liderRedId);
   return (
     <div className="rounded-panel border border-rule bg-white p-6 sm:p-8">
-      <div className="mx-auto max-w-sm rounded-card bg-navy-950 px-5 py-4 text-center text-white">
+      <div className="mx-auto max-w-sm rounded-card bg-brand-blue px-5 py-4 text-center text-white">
         <p className="text-sm text-white/65">Liderazgo de la red</p>
         <p className="mt-1 font-semibold">{leader ? formatMemberName(leader) : 'Por confirmar'}</p>
       </div>
@@ -42,10 +42,8 @@ function OrganizationChart() {
                 <span className="text-sm font-semibold" style={{ color: theme.color }}>
                   Línea {line.numero}
                 </span>
-                <span className="mt-1 text-[0.9375rem] leading-snug font-medium text-navy-950">{line.nombreCorto}</span>
-                <span className="mt-auto pt-3 text-sm text-ink-muted">
-                  {responsable ? formatMemberName(responsable) : 'Por confirmar'}
-                </span>
+                <span className="mt-1 text-[0.9375rem] leading-snug font-medium text-ink">{line.nombreCorto}</span>
+                <span className="mt-auto pt-3 text-sm text-ink-muted">{responsable ? formatMemberName(responsable) : 'Por confirmar'}</span>
               </Link>
             </li>
           );
@@ -60,18 +58,11 @@ export default function About() {
 
   return (
     <>
-      <PageHeader
-        title="Nosotros"
-        breadcrumbs={[{ label: 'Nosotros' }]}
-        description={`${siteConfig.nombre} (${siteConfig.siglas}).`}
-      />
+      <PageHeader title="Nosotros" breadcrumbs={[{ label: 'Nosotros' }]} description={`${siteConfig.nombre} (${siteConfig.siglas}).`} />
 
       <section aria-labelledby="quienes-titulo" className="py-16 sm:py-24">
         <Reveal className="container-page grid gap-10 lg:grid-cols-12 lg:gap-16">
-          <h2
-            id="quienes-titulo"
-            className="font-display text-[2rem] leading-[1.1] font-semibold text-navy-950 sm:text-[2.5rem] lg:col-span-4"
-          >
+          <h2 id="quienes-titulo" className="font-display text-[2rem] leading-[1.1] font-semibold text-ink sm:text-[2.5rem] lg:col-span-4">
             {quienesSomos.titulo}
           </h2>
           <div className="prose-institutional lg:col-span-8">
@@ -84,10 +75,7 @@ export default function About() {
 
       <section aria-labelledby="contexto-titulo" className="border-t border-rule py-16 sm:py-24">
         <Reveal className="container-page grid gap-10 lg:grid-cols-12 lg:gap-16">
-          <h2
-            id="contexto-titulo"
-            className="font-display text-[2rem] leading-[1.1] font-semibold text-navy-950 sm:text-[2.5rem] lg:col-span-4"
-          >
+          <h2 id="contexto-titulo" className="font-display text-[2rem] leading-[1.1] font-semibold text-ink sm:text-[2.5rem] lg:col-span-4">
             {contextoOrigen.titulo}
           </h2>
           <div className="lg:col-span-8">
@@ -129,7 +117,7 @@ export default function About() {
         <Reveal className="container-page grid gap-10 lg:grid-cols-12 lg:gap-16">
           <h2
             id="colaboracion-cientifica-titulo"
-            className="font-display text-[2rem] leading-[1.1] font-semibold text-navy-950 sm:text-[2.5rem] lg:col-span-4"
+            className="font-display text-[2rem] leading-[1.1] font-semibold text-ink sm:text-[2.5rem] lg:col-span-4"
           >
             {importanciaColaboracion.titulo}
           </h2>

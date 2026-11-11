@@ -37,27 +37,24 @@ export function MemberFilters({ filters, options, activeCount, onChange, onReset
           onClick={() => setExpanded((v) => !v)}
           aria-expanded={expanded}
           aria-controls="filtros-directorio"
-          className="inline-flex h-11 items-center gap-2 rounded-control border border-rule-strong bg-white px-4 font-medium text-navy-950"
+          className="inline-flex h-11 items-center gap-2 rounded-control border border-rule-strong bg-white px-4 font-medium text-ink"
         >
           <SlidersHorizontal className="size-4" aria-hidden="true" />
           Filtros
           {activeCount > 0 ? (
-            <span className="grid size-5 place-items-center rounded-full bg-electric-600 text-xs font-semibold text-white">
+            <span className="grid size-5 place-items-center rounded-full bg-brand-green text-xs font-semibold text-white">
               {activeCount}
             </span>
           ) : null}
         </button>
         {activeCount > 0 ? (
-          <button type="button" onClick={onReset} className="h-11 rounded-control px-3 text-[0.9375rem] font-medium text-electric-700">
+          <button type="button" onClick={onReset} className="h-11 rounded-control px-3 text-[0.9375rem] font-medium text-brand-green">
             Quitar filtros
           </button>
         ) : null}
       </div>
 
-      <div
-        id="filtros-directorio"
-        className={cn('mt-4 grid gap-4 sm:grid-cols-2 md:mt-0 md:grid md:grid-cols-4', !expanded && 'hidden')}
-      >
+      <div id="filtros-directorio" className={cn('mt-4 grid gap-4 sm:grid-cols-2 md:mt-0 md:grid md:grid-cols-4', !expanded && 'hidden')}>
         <SelectField
           label="Institución"
           value={filters.institucion}
@@ -71,12 +68,7 @@ export function MemberFilters({ filters, options, activeCount, onChange, onReset
           onChange={(value) => onChange({ linea: value })}
         />
         <SelectField label="Rol" value={filters.rol} options={options.roles} onChange={(value) => onChange({ rol: value })} />
-        <SelectField
-          label="Ordenar por"
-          value={filters.orden}
-          options={SORT_OPTIONS}
-          onChange={(value) => onChange({ orden: value })}
-        />
+        <SelectField label="Ordenar por" value={filters.orden} options={SORT_OPTIONS} onChange={(value) => onChange({ orden: value })} />
       </div>
 
       {activeCount > 0 ? (
@@ -84,7 +76,7 @@ export function MemberFilters({ filters, options, activeCount, onChange, onReset
           <button
             type="button"
             onClick={onReset}
-            className="inline-flex h-9 items-center gap-1.5 rounded-control px-2.5 text-[0.9375rem] font-medium text-electric-700 hover:bg-electric-50 hover:text-navy-950"
+            className="inline-flex h-9 items-center gap-1.5 rounded-control px-2.5 text-[0.9375rem] font-medium text-brand-green hover:bg-brand-green-50 hover:text-ink"
           >
             <X className="size-4" aria-hidden="true" />
             Quitar filtros ({activeCount})
